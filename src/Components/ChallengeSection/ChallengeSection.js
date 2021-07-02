@@ -1,5 +1,6 @@
 import React from 'react';
 import './ChallengeSection.css';
+import TestContainer from '../TestContainer/TestContainer';
 
 const ChallengeSection = () => {
     return(
@@ -7,6 +8,7 @@ const ChallengeSection = () => {
             <h1 data-aos="fade-down" className="challenge-section-header">
                 Take a speed test now
             </h1>
+            <TestContainer />
         </div>
     )
 }
