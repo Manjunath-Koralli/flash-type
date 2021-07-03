@@ -3,8 +3,7 @@ import './TestContainer.css';
 import TypingChallenge from '../TypingChallenge/TypingChallenge';
 import TryAgain from '../TryAgain/TryAgain';
 
-const TestContainer = ({words,characters,wpm}) => {
-    const timeRemaining = 30;
+const TestContainer = ({selectedParagraph, timeStarted, timeRemaining, words, characters, wpm}) => {    
     
     return (
         // curly braces is expression
@@ -12,7 +11,8 @@ const TestContainer = ({words,characters,wpm}) => {
             {
                 timeRemaining > 0 ? (
                     <div data-aos="fade-up" className="typing-challenge-container">
-                        <TypingChallenge words={words} characters={characters} wpm={wpm} />
+                        <TypingChallenge selectedParagraph={selectedParagraph} timeStarted={timeStarted} timeRemaining={timeRemaining} 
+                                    words={words} characters={characters} wpm={wpm} />
                     </div>
                 ) :
                 (

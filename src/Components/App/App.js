@@ -5,13 +5,42 @@ import Landing from '../Landing/Landing';
 import ChallengeSection from '../ChallengeSection/ChallengeSection';
 import Footer from '../Footer/Footer';
 
+const totalTime = 60;
+const paragraphUrl = "http://metaphorpsum.com/paragraphs/1/9";
+
+// Lifecycle methods comes with class based components, not with function based components
+// Lifecycle methods - flow of execution of our particular react component
+
 class App extends React.Component {
-  render() {
+  state = {
+    selectedParagraph: "My Name is Manjunath Koralli ! Engineer-Software",
+    timeStarted: false,
+    timeRemaining: totalTime,
+    words: 0,
+    characters: 0,
+    wpm: 0
+  }
+
+  componentDidMount(){
+    fetch(paragraphUrl)
+      .then(response => response.text())
+      .then(paragraph => console.log("Api response is:", paragraph));
+  }
+
+  render() {    
+
     return (
       <div className="app">
         <Nav />
         <Landing />
-        <ChallengeSection />
+        <ChallengeSection
+          selectedParagraph={this.state.selectedParagraph}
+          words={this.state.words}
+          characters={this.state.characters}
+          wpm={this.state.wpm}
+          timeRemaining={this.state.timeRemaining}
+          timeStarted={this.state.timeStarted}
+        />
         <Footer />
       </div>
     )
