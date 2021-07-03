@@ -3,7 +3,7 @@ import './TypingChallenge.css';
 import ChallengeDetailsCard from '../ChallengeDetailsCard/ChallengeDetailsCard';
 import Typewriter from '../Typewriter/Typewriter';
 
-const TypingChallenge = ({selectedParagraph, timeStarted, timeRemaining, words, characters, wpm}) => {
+const TypingChallenge = ({selectedParagraph, timeStarted, timeRemaining, words, characters, wpm, testInfo}) => {
     return (
         <div className="typing-challenge-container">
             <div className="details-container">
@@ -14,7 +14,7 @@ const TypingChallenge = ({selectedParagraph, timeStarted, timeRemaining, words, 
 
             <div className="typewriter-container">
                 <Typewriter selectedParagraph={selectedParagraph} timeStarted={timeStarted}
-                       timeRemaining={timeRemaining} />
+                       timeRemaining={timeRemaining} testInfo={testInfo} />
             </div>
         </div>
     )

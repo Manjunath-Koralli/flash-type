@@ -1,7 +1,8 @@
 import React from 'react';
 import './Typewriter.css';
 
-const Typewriter = ({selectedParagraph, timeStarted, timeRemaining }) => {
+const Typewriter = ({selectedParagraph, timeStarted, timeRemaining, testInfo }) => {
+    console.log("Inside typewriter:",testInfo)
     return (
         <div className="typing-challenge">
             <div className="timer-container">
@@ -18,6 +19,7 @@ const Typewriter = ({selectedParagraph, timeStarted, timeRemaining }) => {
                 <div className="text-area-left">
                     <div className="textarea test-paragraph">
                         {selectedParagraph}
+                        
                     </div>
                 </div>
                 <div className="text-area-right">

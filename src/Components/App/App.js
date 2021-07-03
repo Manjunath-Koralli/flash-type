@@ -18,17 +18,32 @@ class App extends React.Component {
     timeRemaining: totalTime,
     words: 0,
     characters: 0,
-    wpm: 0
+    wpm: 0,
+    testInfo : []
   }
 
-  componentDidMount(){
-    fetch(paragraphUrl)
-      .then(response => response.text())
-      .then(paragraph => console.log("Api response is:", paragraph));
+  componentDidMount() {
+    // fetch(paragraphUrl)
+    //   .then(response => response.text())
+    //   .then(paragraph => {
+    //     console.log("Api response is:", paragraph);
+    //     this.setState({
+    //       selectedParagraph : paragraph
+    //     })
+    //   });  
+    
+    const selectedParagraphArray = this.state.selectedParagraph.split("");
+    const testInfo = selectedParagraphArray.map(selectedLetter => {
+      return {
+        testLetter : selectedLetter,
+        status : "notAttempted"
+      }
+    });
+
+    this.setState({testInfo : testInfo})
   }
 
-  render() {    
-
+  render() {
     return (
       <div className="app">
         <Nav />
@@ -40,6 +55,7 @@ class App extends React.Component {
           wpm={this.state.wpm}
           timeRemaining={this.state.timeRemaining}
           timeStarted={this.state.timeStarted}
+          testInfo={this.state.testInfo}
         />
         <Footer />
       </div>
