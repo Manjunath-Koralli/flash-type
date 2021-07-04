@@ -4,8 +4,9 @@ import Nav from '../Nav/Nav';
 import Landing from '../Landing/Landing';
 import ChallengeSection from '../ChallengeSection/ChallengeSection';
 import Footer from '../Footer/Footer';
+import { SAMPLE_PARAGRAPHS } from '../data/sampleParagraph';
 
-const totalTime = 1;
+const totalTime = 60;
 const paragraphUrl = "http://metaphorpsum.com/paragraphs/1/8";
 const defaultState = {
   selectedParagraph: "",
@@ -14,7 +15,7 @@ const defaultState = {
   words: 0,
   characters: 0,
   wpm: 0,
-  testInfo : []
+  testInfo: []
 }
 
 // Lifecycle methods comes with class based components, not with function based components
@@ -22,6 +23,20 @@ const defaultState = {
 
 class App extends React.Component {
   state = defaultState;
+
+  fetchNewParagraphCallback = () => {
+    const paragraph = SAMPLE_PARAGRAPHS[
+      Math.floor(Math.random() * SAMPLE_PARAGRAPHS.length)
+    ];
+    const selectedParagraphArray = paragraph.split("");
+    const testInfo = selectedParagraphArray.map(selectedLetter => {
+      return {
+        testLetter: selectedLetter,
+        status: "notAttempted"
+      }
+    });
+    this.setState({ ...defaultState, testInfo: testInfo, selectedParagraph: paragraph })
+  }
 
   fetchNewParagraph = () => {
     fetch(paragraphUrl)
@@ -32,51 +47,52 @@ class App extends React.Component {
         //   selectedParagraph : paragraph
         // })
         // const selectedParagraphArray = this.state.selectedParagraph.split("");
-        const selectedParagraphArray =paragraph.split("");
+        const selectedParagraphArray = paragraph.split("");
         const testInfo = selectedParagraphArray.map(selectedLetter => {
           return {
-            testLetter : selectedLetter,
-            status : "notAttempted"
+            testLetter: selectedLetter,
+            status: "notAttempted"
           }
         });
-        this.setState({...defaultState,testInfo : testInfo,selectedParagraph : paragraph})
-      }); 
+        this.setState({ ...defaultState, testInfo: testInfo, selectedParagraph: paragraph })
+      });
   }
   componentDidMount() {
-     this.fetchNewParagraph();
+    // this.fetchNewParagraph();
+    this.fetchNewParagraphCallback();
   }
 
   startTimer = () => {
-    this.setState({ timeStarted : true });
+    this.setState({ timeStarted: true });
     const timer = setInterval(() => {
-      if(this.state.timeRemaining > 0){
+      if (this.state.timeRemaining > 0) {
         const timeSpent = totalTime - this.state.timeRemaining;
         const wpm = timeSpent > 0 ? (this.state.words / timeSpent) : 0;
         this.setState({
-          timeRemaining : this.state.timeRemaining - 1,
-          wpm : +wpm
+          timeRemaining: this.state.timeRemaining - 1,
+          wpm: +wpm
         })
       }
       else {
         clearInterval(timer)
       }
-      
-    },1000)
+
+    }, 1000)
   }
 
   handleUserInput = (inputValue) => {
     // console.log(inputValue);
-    if(!this.state.timeStarted) this.startTimer();
+    if (!this.state.timeStarted) this.startTimer();
 
     const characters = inputValue.length;
     const words = inputValue.split(" ").length;
     const index = characters - 1;
-    if(index < 0) {
+    if (index < 0) {
       this.setState({
-        testInfo : [
+        testInfo: [
           {
-            testLetter : this.state.testInfo[0].testLetter,
-            status : 'notAttempted'
+            testLetter: this.state.testInfo[0].testLetter,
+            status: 'notAttempted'
           },
           ...this.state.testInfo.slice(1)
         ],
@@ -86,7 +102,7 @@ class App extends React.Component {
       return;
     }
 
-    if(index >= this.state.selectedParagraph.length) {
+    if (index >= this.state.selectedParagraph.length) {
       this.setState({
         characters,
         words
@@ -95,7 +111,7 @@ class App extends React.Component {
     }
 
     const testInfo = this.state.testInfo;
-    if(!(index === this.state.selectedParagraph.length - 1)) {
+    if (!(index === this.state.selectedParagraph.length - 1)) {
       testInfo[index + 1].status = 'notAttempted';
     }
 
@@ -111,7 +127,8 @@ class App extends React.Component {
 
   startAgain = () => {
     // alert('Start again')
-    this.fetchNewParagraph();
+    // this.fetchNewParagraph();
+    this.fetchNewParagraphCallback();
   }
 
   render() {
@@ -127,8 +144,8 @@ class App extends React.Component {
           timeRemaining={this.state.timeRemaining}
           timeStarted={this.state.timeStarted}
           testInfo={this.state.testInfo}
-          onInputChange = {this.handleUserInput}
-          startAgain = {this.startAgain}
+          onInputChange={this.handleUserInput}
+          startAgain={this.startAgain}
         />
         <Footer />
       </div>
