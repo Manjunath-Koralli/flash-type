@@ -3,7 +3,7 @@ import './TestContainer.css';
 import TypingChallenge from '../TypingChallenge/TypingChallenge';
 import TryAgain from '../TryAgain/TryAgain';
 
-const TestContainer = ({selectedParagraph, timeStarted, timeRemaining, words, characters, wpm, testInfo, onInputChange}) => {    
+const TestContainer = ({selectedParagraph, timeStarted, timeRemaining, words, characters, wpm, testInfo, onInputChange, startAgain}) => {    
     
     return (
         // curly braces is expression
@@ -17,7 +17,7 @@ const TestContainer = ({selectedParagraph, timeStarted, timeRemaining, words, ch
                 ) :
                 (
                     <div className="try-again-container">
-                        <TryAgain words={words} characters={characters} wpm={wpm} />
+                        <TryAgain words={words} characters={characters} wpm={wpm} startAgain={startAgain} />
                     </div>
                 )
             }

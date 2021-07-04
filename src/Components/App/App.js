@@ -5,42 +5,45 @@ import Landing from '../Landing/Landing';
 import ChallengeSection from '../ChallengeSection/ChallengeSection';
 import Footer from '../Footer/Footer';
 
-const totalTime = 60;
-const paragraphUrl = "http://metaphorpsum.com/paragraphs/1/9";
+const totalTime = 1;
+const paragraphUrl = "http://metaphorpsum.com/paragraphs/1/8";
+const defaultState = {
+  selectedParagraph: "",
+  timeStarted: false,
+  timeRemaining: totalTime,
+  words: 0,
+  characters: 0,
+  wpm: 0,
+  testInfo : []
+}
 
 // Lifecycle methods comes with class based components, not with function based components
 // Lifecycle methods - flow of execution of our particular react component
 
 class App extends React.Component {
-  state = {
-    selectedParagraph: "My Name is Manjunath !",
-    timeStarted: false,
-    timeRemaining: totalTime,
-    words: 0,
-    characters: 0,
-    wpm: 0,
-    testInfo : []
+  state = defaultState;
+
+  fetchNewParagraph = () => {
+    fetch(paragraphUrl)
+      .then(response => response.text())
+      .then(paragraph => {
+        console.log("Api response is:", paragraph);
+        // this.setState({
+        //   selectedParagraph : paragraph
+        // })
+        // const selectedParagraphArray = this.state.selectedParagraph.split("");
+        const selectedParagraphArray =paragraph.split("");
+        const testInfo = selectedParagraphArray.map(selectedLetter => {
+          return {
+            testLetter : selectedLetter,
+            status : "notAttempted"
+          }
+        });
+        this.setState({...defaultState,testInfo : testInfo,selectedParagraph : paragraph})
+      }); 
   }
-
   componentDidMount() {
-    // fetch(paragraphUrl)
-    //   .then(response => response.text())
-    //   .then(paragraph => {
-    //     console.log("Api response is:", paragraph);
-    //     this.setState({
-    //       selectedParagraph : paragraph
-    //     })
-    //   });  
-    
-    const selectedParagraphArray = this.state.selectedParagraph.split("");
-    const testInfo = selectedParagraphArray.map(selectedLetter => {
-      return {
-        testLetter : selectedLetter,
-        status : "notAttempted"
-      }
-    });
-
-    this.setState({testInfo : testInfo})
+     this.fetchNewParagraph();
   }
 
   startTimer = () => {
@@ -60,9 +63,55 @@ class App extends React.Component {
       
     },1000)
   }
+
   handleUserInput = (inputValue) => {
     // console.log(inputValue);
     if(!this.state.timeStarted) this.startTimer();
+
+    const characters = inputValue.length;
+    const words = inputValue.split(" ").length;
+    const index = characters - 1;
+    if(index < 0) {
+      this.setState({
+        testInfo : [
+          {
+            testLetter : this.state.testInfo[0].testLetter,
+            status : 'notAttempted'
+          },
+          ...this.state.testInfo.slice(1)
+        ],
+        characters,
+        words
+      });
+      return;
+    }
+
+    if(index >= this.state.selectedParagraph.length) {
+      this.setState({
+        characters,
+        words
+      });
+      return;
+    }
+
+    const testInfo = this.state.testInfo;
+    if(!(index === this.state.selectedParagraph.length - 1)) {
+      testInfo[index + 1].status = 'notAttempted';
+    }
+
+    const isCorrect = inputValue[index] === testInfo[index].testLetter;
+
+    testInfo[index].status = isCorrect ? 'correct' : 'incorrect';
+    this.setState({
+      testInfo,
+      words,
+      characters
+    })
+  }
+
+  startAgain = () => {
+    // alert('Start again')
+    this.fetchNewParagraph();
   }
 
   render() {
@@ -79,6 +128,7 @@ class App extends React.Component {
           timeStarted={this.state.timeStarted}
           testInfo={this.state.testInfo}
           onInputChange = {this.handleUserInput}
+          startAgain = {this.startAgain}
         />
         <Footer />
       </div>
