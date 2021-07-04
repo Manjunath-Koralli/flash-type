@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/flash-type/static/css/main.fec1c12a.chunk.css",
+    "main.css": "/flash-type/static/css/main.eac71ebd.chunk.css",
     "main.js": "/flash-type/static/js/main.28bc5a71.chunk.js",
     "main.js.map": "/flash-type/static/js/main.28bc5a71.chunk.js.map",
     "runtime-main.js": "/flash-type/static/js/runtime-main.56652418.js",
@@ -8,7 +8,7 @@
     "static/js/2.b42ef212.chunk.js": "/flash-type/static/js/2.b42ef212.chunk.js",
     "static/js/2.b42ef212.chunk.js.map": "/flash-type/static/js/2.b42ef212.chunk.js.map",
     "index.html": "/flash-type/index.html",
-    "static/css/main.fec1c12a.chunk.css.map": "/flash-type/static/css/main.fec1c12a.chunk.css.map",
+    "static/css/main.eac71ebd.chunk.css.map": "/flash-type/static/css/main.eac71ebd.chunk.css.map",
     "static/js/2.b42ef212.chunk.js.LICENSE.txt": "/flash-type/static/js/2.b42ef212.chunk.js.LICENSE.txt",
     "static/media/hero.96e141d3.png": "/flash-type/static/media/hero.96e141d3.png",
     "static/media/logo.904ac8fd.png": "/flash-type/static/media/logo.904ac8fd.png"
@@ -16,7 +16,7 @@
   "entrypoints": [
     "static/js/runtime-main.56652418.js",
     "static/js/2.b42ef212.chunk.js",
-    "static/css/main.fec1c12a.chunk.css",
+    "static/css/main.eac71ebd.chunk.css",
     "static/js/main.28bc5a71.chunk.js"
   ]
 }
