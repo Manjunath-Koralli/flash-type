@@ -1,8 +1,9 @@
 import React from 'react';
 import './Typewriter.css';
+import TestLetter from '../TestLetter/TestLetter';
 
-const Typewriter = ({selectedParagraph, timeStarted, timeRemaining, testInfo }) => {
-    console.log("Inside typewriter:",testInfo)
+const Typewriter = ({selectedParagraph, timeStarted, timeRemaining, testInfo, onInputChange }) => {
+    // console.log("Inside typewriter:",testInfo)
     return (
         <div className="typing-challenge">
             <div className="timer-container">
@@ -18,13 +19,21 @@ const Typewriter = ({selectedParagraph, timeStarted, timeRemaining, testInfo }) 
             <div className="text-area-container">
                 <div className="text-area-left">
                     <div className="textarea test-paragraph">
-                        {selectedParagraph}
-                        
+                        {/* {selectedParagraph} */}
+                        {
+                            testInfo.map((individualLetterInfo,index) => {
+                                return (
+                                    <TestLetter key={index} individualLetterInfo={individualLetterInfo} />
+                                )
+                            })
+                        }
                     </div>
                 </div>
                 <div className="text-area-right">
-                    <textarea className="textarea" placeholder="Start typing here">
-
+                    <textarea 
+                        className="textarea" 
+                        placeholder="Start typing here"
+                        onChange = {(e) => onInputChange(e.target.value)}>
                     </textarea>
                 </div>
             </div>
